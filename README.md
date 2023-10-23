@@ -1,5 +1,5 @@
 # Pratya_Cherbundit_agnos_backend
-How to deploy.
+## How to deploy.
 
 1.Run ```docker-compose up --build```
 
@@ -12,7 +12,7 @@ Body raw
 }
 ```
 
-How to run unit test.
+## How to run unit test.
 
 1.Go to services directory
 ```
