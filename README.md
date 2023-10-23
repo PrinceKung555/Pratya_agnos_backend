@@ -1,9 +1,11 @@
 # Pratya_Cherbundit_agnos_backend
 ## How to deploy.
 
-1.Run ```docker-compose up --build```
+1.Open Docker
 
-2.Use Postman or Curl to test API POST method http://localhost:80/api/strong_password_steps.
+2.Run ```docker-compose up --build```
+
+3.Use Postman or Curl to test API POST method http://localhost:80/api/strong_password_steps.
 
 Body raw
 ```
