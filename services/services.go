@@ -1,6 +1,7 @@
 package services
 
 import (
+	"math/rand"
 	"strings"
 )
 
@@ -38,16 +39,32 @@ func ActionsNeededToMakeStrong(password string) int {
 		return 0
 	}
 
-	missingCriteria := 3
-	if strings.ContainsAny(password, "abcdefghijklmnopqrstuvwxyz") {
-		missingCriteria--
+	hasLower, hasUpper, hasDigit := 1, 1, 1
+	lowerCharset := "abcdefghijklmnopqrstuvwxyz"
+	upperCharset := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	digitCharset := "0123456789"
+	charSet := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+	if strings.ContainsAny(password, lowerCharset) {
+		hasLower = 0
+		charSet = strings.Replace(charSet, string(lowerCharset), "", -1)
 	}
-	if strings.ContainsAny(password, "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-		missingCriteria--
+	if strings.ContainsAny(password, upperCharset) {
+		hasUpper = 0
+		charSet = strings.Replace(charSet, string(upperCharset), "", -1)
 	}
-	if strings.ContainsAny(password, "0123456789") {
-		missingCriteria--
+	if strings.ContainsAny(password, digitCharset) {
+		hasDigit = 0
+		charSet = strings.Replace(charSet, string(digitCharset), "", -1)
 	}
+
+	if charSet == "" {
+		charSet = lowerCharset + upperCharset + digitCharset
+	}
+
+	charSet = strings.Replace(charSet, string(password), "", -1)
+
+	missingCriteria := hasLower + hasUpper + hasDigit
 
 	if len(password) <= 6 {
 		return max(missingCriteria, 6-len(password))
@@ -57,6 +74,8 @@ func ActionsNeededToMakeStrong(password string) int {
 	for i := 2; i < len(password); {
 		if password[i] == password[i-1] && password[i] == password[i-2] {
 			replacementsNeeded++
+			newChar := generateRandomString(charSet)
+			password = password[:i] + newChar + password[i+1:]
 			i += 2
 		} else {
 			i++
@@ -79,4 +98,8 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func generateRandomString(charSet string) string {
+	return string(charSet[rand.Intn(len(charSet))])
 }

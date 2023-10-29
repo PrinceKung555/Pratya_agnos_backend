@@ -16,6 +16,8 @@ func TestIsStrong(t *testing.T) {
 		{"Aa1Bb2Ccc3Ddd4Eeee5Fffff6", false},
 		{"abc123!@#", false},
 		{"a", false},
+		{"aaaaaaaaaaaaaaaaaaaaa", false},
+		{"!!!!!!!!!!!!!!!!!!!!!", false},
 	}
 
 	for _, test := range tests {
@@ -39,6 +41,8 @@ func TestActionsNeededToMakeStrong(t *testing.T) {
 		{"Aa1Bb2Ccc3Ddd4Eeee5Fffff6", 5},
 		{"abc123!@#", 1},
 		{"a", 5},
+		{"aaaaaaaaaaaaaaaaaaaaa", 7},
+		{"!!!!!!!!!!!!!!!!!!!!!", 7},
 	}
 
 	for _, test := range tests {
